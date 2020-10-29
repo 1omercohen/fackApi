@@ -34,3 +34,30 @@ required:
   - userId
   - customerId
   - created
+x-examples:
+  example:
+    id: 0
+    cost: 0
+    amount: 2
+    total: 0
+    receipt_number: 0
+    userId:
+      id: 0
+      username: string
+      email: string
+      password: string
+      send_to: string
+    customerId:
+      id: 0
+      first_name: string
+      last_name: string
+      full_name: string
+      email: string
+      phone: string
+      userId:
+        id: 0
+        username: string
+        email: string
+        password: string
+        send_to: string
+    created: '2019-08-24T14:15:22Z'

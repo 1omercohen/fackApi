@@ -3,9 +3,9 @@ type: object
 x-tags:
   - schedules
 x-examples:
-  example-1:
+  example:
     id: 0
-    datetime: null
+    created: '2019-08-24T14:15:22Z'
     is_complete: true
     is_paid: true
     comments:
@@ -29,6 +29,8 @@ x-examples:
       email: string
       password: string
       send_to: string
+    day: '2019-08-24'
+    time: string
 properties:
   id:
     type: integer
