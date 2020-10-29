@@ -2,12 +2,17 @@
   "openapi": "3.0.0",
   "info": {
     "title": "demo-data",
-    "version": "1.0"
+    "version": "1.0",
+    "description": "",
+    "contact": {
+      "name": "omer cohen",
+      "email": "1omercohen@gmail.com"
+    }
   },
   "servers": [
     {
-      "description": "",
-      "url": "https://omer-demo.stoplight.io/api"
+      "url": "https://face-api.stoplight.io/api",
+      "description": "mock-server-api"
     }
   ],
   "paths": {
@@ -26,13 +31,21 @@
                   "type": "object",
                   "properties": {
                     "user": {
-                      "$ref": "../models/users.v1.yaml"
+                      "type": "object",
+                      "properties": {
+                        "username": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "send_to": {
+                          "type": "string"
+                        }
+                      }
                     },
                     "status": {
-                      "type": [
-                        "string",
-                        "boolean"
-                      ]
+                      "type": "boolean"
                     },
                     "message": {
                       "type": "string",
@@ -89,7 +102,10 @@
                   "type": "object",
                   "properties": {
                     "user": {
-                      "$ref": "../models/users.v1.yaml"
+                      "type": "array",
+                      "items": {
+                        "$ref": "../models/users.v1.yaml"
+                      }
                     },
                     "status": {
                       "type": "boolean"
@@ -102,19 +118,6 @@
                     "user",
                     "status"
                   ]
-                },
-                "examples": {
-                  "example-1": {
-                    "value": {
-                      "id": {
-                        "id": 0,
-                        "username": "string",
-                        "email": "string",
-                        "password": "string",
-                        "send_to": "string"
-                      }
-                    }
-                  }
                 }
               }
             }
@@ -174,33 +177,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "first_name": {
-                      "type": "string"
-                    },
-                    "last_name": {
-                      "type": "string"
-                    },
-                    "full_name": {
-                      "type": "string"
-                    },
-                    "email": {
-                      "type": "string",
-                      "format": "email"
-                    },
-                    "phone": {
-                      "type": "string"
-                    },
-                    "id": {
+                    "customer": {
                       "$ref": "../models/customers.v1.yaml"
+                    },
+                    "status": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
                     }
                   },
                   "required": [
-                    "first_name",
-                    "last_name",
-                    "full_name",
-                    "email",
-                    "phone",
-                    "id"
+                    "customer",
+                    "status"
                   ]
                 },
                 "examples": {}
@@ -231,7 +220,11 @@
                     "message": {
                       "type": "string"
                     }
-                  }
+                  },
+                  "required": [
+                    "status",
+                    "message"
+                  ]
                 }
               }
             }
@@ -271,7 +264,7 @@
       },
       "parameters": []
     },
-    "/user/userId/customer/customerId": {
+    "/user/:userId/customer/:customerId": {
       "get": {
         "summary": "get customer of user",
         "tags": [
@@ -359,9 +352,10 @@
           }
         },
         "operationId": "get-user-userId-customer-customerId"
-      }
+      },
+      "parameters": []
     },
-    "/user/userId/customer/customerId/schedule": {
+    "/user/:userId/customer/:customerId/schedule": {
       "get": {
         "summary": "get customer schedulers of user",
         "tags": [
@@ -369,7 +363,65 @@
           "customers",
           "users"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "customer": {
+                      "type": "object",
+                      "required": [
+                        "first_name",
+                        "last_name",
+                        "full_name",
+                        "email",
+                        "phone",
+                        "schedules"
+                      ],
+                      "properties": {
+                        "first_name": {
+                          "type": "string"
+                        },
+                        "last_name": {
+                          "type": "string"
+                        },
+                        "full_name": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email"
+                        },
+                        "phone": {
+                          "type": "string"
+                        },
+                        "schedules": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "../models/schedules.v1.yaml"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "customer"
+                  ]
+                }
+              }
+            }
+          }
+        },
         "operationId": "get-user-userId-customer-customerId-schedule"
       }
     },
@@ -388,46 +440,22 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "$ref": "../models/schedules.v1.yaml"
+                    "status": {
+                      "type": "boolean"
                     },
-                    "day": {
-                      "type": "string",
-                      "format": "date"
+                    "message": {
+                      "type": "string"
                     },
-                    "created": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "time": {
-                      "type": "string",
-                      "format": "time"
-                    },
-                    "comments": {
+                    "schedules": {
                       "type": "array",
                       "items": {
-                        "type": "string"
+                        "$ref": "../models/schedules.v1.yaml"
                       }
-                    },
-                    "customer": {
-                      "$ref": "../models/customers.v1.yaml"
-                    },
-                    "is_complete": {
-                      "type": "boolean"
-                    },
-                    "is_paid": {
-                      "type": "boolean"
                     }
                   },
                   "required": [
-                    "id",
-                    "day",
-                    "created",
-                    "time",
-                    "comments",
-                    "customer",
-                    "is_complete",
-                    "is_paid"
+                    "status",
+                    "schedules"
                   ]
                 }
               }
@@ -438,14 +466,58 @@
       }
     },
     "/user/userId/receipt": {
-      "get": {
-        "summary": "get all receipts of useiId",
-        "tags": [
-          "receipts",
-          "users"
-        ],
-        "responses": {},
-        "operationId": "get-user-userId-receipt"
+      "post": {
+        "summary": "",
+        "operationId": "post-user-userId-receipt",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "receipts": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "../models/receipts.v1.yaml"
+                      }
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "receipts"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "start": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "end": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
