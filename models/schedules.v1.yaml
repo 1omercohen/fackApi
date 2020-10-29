@@ -2,23 +2,6 @@ title: schedules
 type: object
 x-tags:
   - schedules
-properties:
-  id:
-    type: integer
-  datetime:
-    type: date
-  is_complete:
-    type: boolean
-  is_paid:
-    type: boolean
-  comments:
-    type: array
-    items:
-      type: string
-  customerId:
-    $ref: ./customers.v1.yaml
-  userId:
-    $ref: ./users.v1.yaml
 x-examples:
   example-1:
     id: 0
@@ -46,3 +29,27 @@ x-examples:
       email: string
       password: string
       send_to: string
+properties:
+  id:
+    type: integer
+  datetime:
+    type: date
+  is_complete:
+    type: boolean
+  is_paid:
+    type: boolean
+  comments:
+    type: array
+    items:
+      type: string
+  customerId:
+    $ref: ./customers.v1.yaml
+  userId:
+    $ref: ./users.v1.yaml
+required:
+  - id
+  - is_complete
+  - is_paid
+  - comments
+  - customerId
+  - userId

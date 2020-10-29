@@ -17,3 +17,13 @@ properties:
     $ref: ./users.v1.yaml
   customerId:
     $ref: ./customers.v1.yaml
+  created:
+    type: date
+required:
+  - id
+  - cost
+  - amount
+  - total
+  - receipt_number
+  - userId
+  - customerId

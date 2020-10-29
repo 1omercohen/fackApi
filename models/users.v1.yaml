@@ -20,3 +20,8 @@ properties:
     type: string
   send_to:
     type: string
+required:
+  - id
+  - username
+  - email
+  - password
