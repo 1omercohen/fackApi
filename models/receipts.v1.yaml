@@ -1,0 +1,19 @@
+title: receipts
+type: object
+x-tags:
+  - receipts
+properties:
+  id:
+    type: integer
+  cost:
+    type: number
+  amount:
+    type: integer
+  total:
+    type: number
+  receipt_number:
+    type: integer
+  userId:
+    $ref: ./users.v1.yaml
+  customerId:
+    $ref: ./customers.v1.yaml

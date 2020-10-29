@@ -1,0 +1,33 @@
+title: customers
+type: object
+x-tags:
+  - customers
+properties:
+  id:
+    type: integer
+  first_name:
+    type: string
+  last_name:
+    type: string
+  full_name:
+    type: string
+  email:
+    type: string
+  phone:
+    type: string
+  userId:
+    $ref: ./users.v1.yaml
+x-examples:
+  example-1:
+    id: 0
+    first_name: string
+    last_name: string
+    full_name: string
+    email: string
+    phone: string
+    userId:
+      id: 0
+      username: string
+      email: string
+      password: string
+      send_to: string

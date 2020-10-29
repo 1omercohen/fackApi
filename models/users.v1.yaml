@@ -1,0 +1,22 @@
+title: users
+type: object
+x-tags:
+  - users
+x-examples:
+  example-1:
+    id: 0
+    username: string
+    email: string
+    password: string
+    send_to: string
+properties:
+  id:
+    type: integer
+  username:
+    type: string
+  email:
+    type: string
+  password:
+    type: string
+  send_to:
+    type: string
