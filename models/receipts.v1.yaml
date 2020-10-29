@@ -2,15 +2,20 @@ title: receipts
 type: object
 x-tags:
   - receipts
+description: ''
 properties:
   id:
     type: integer
   cost:
     type: number
+    format: float
   amount:
     type: integer
+    exclusiveMinimum: true
+    minimum: 1
   total:
     type: number
+    format: float
   receipt_number:
     type: integer
   userId:
@@ -18,7 +23,8 @@ properties:
   customerId:
     $ref: ./customers.v1.yaml
   created:
-    type: date
+    type: string
+    format: date-time
 required:
   - id
   - cost
@@ -27,3 +33,4 @@ required:
   - receipt_number
   - userId
   - customerId
+  - created

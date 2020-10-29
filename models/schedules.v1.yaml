@@ -32,8 +32,9 @@ x-examples:
 properties:
   id:
     type: integer
-  datetime:
-    type: date
+  created:
+    type: string
+    format: date-time
   is_complete:
     type: boolean
   is_paid:
@@ -46,10 +47,19 @@ properties:
     $ref: ./customers.v1.yaml
   userId:
     $ref: ./users.v1.yaml
+  day:
+    type: string
+    format: date
+  time:
+    type: string
+    format: time
 required:
   - id
+  - created
   - is_complete
   - is_paid
   - comments
   - customerId
   - userId
+  - day
+  - time
