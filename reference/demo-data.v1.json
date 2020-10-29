@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": "https://face-api.stoplight.io/api",
+      "url": "https://apidemo.stoplight.io/api",
       "description": "mock-server-api"
     }
   ],
