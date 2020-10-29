@@ -4,7 +4,12 @@
     "title": "demo-data",
     "version": "1.0"
   },
-  "servers": [],
+  "servers": [
+    {
+      "description": "",
+      "url": "https://omer-demo.stoplight.io/api"
+    }
+  ],
   "paths": {
     "/login": {
       "post": {
@@ -20,24 +25,23 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
+                    "user": {
                       "$ref": "../models/users.v1.yaml"
                     },
-                    "username": {
-                      "type": "string"
+                    "status": {
+                      "type": [
+                        "string",
+                        "boolean"
+                      ]
                     },
-                    "email": {
+                    "message": {
                       "type": "string",
                       "format": "email"
-                    },
-                    "send_to": {
-                      "type": "string"
                     }
                   },
                   "required": [
-                    "id",
-                    "username",
-                    "email"
+                    "user",
+                    "status"
                   ]
                 }
               }
@@ -76,7 +80,46 @@
         "tags": [
           "users"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "$ref": "../models/users.v1.yaml"
+                    },
+                    "status": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "user",
+                    "status"
+                  ]
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "id": {
+                        "id": 0,
+                        "username": "string",
+                        "email": "string",
+                        "password": "string",
+                        "send_to": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "operationId": "get-users"
       }
     },
@@ -86,11 +129,37 @@
         "tags": [
           "users"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "boolean"
+                    },
+                    "user": {
+                      "$ref": "../models/users.v1.yaml"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "user"
+                  ]
+                }
+              }
+            }
+          }
+        },
         "operationId": "get-user-:id"
       }
     },
-    "/user/userId/customer": {
+    "/user/:userId/customer": {
       "get": {
         "summary": "Get Customers Of User",
         "tags": [
@@ -199,7 +268,8 @@
             }
           }
         }
-      }
+      },
+      "parameters": []
     },
     "/user/userId/customer/customerId": {
       "get": {
