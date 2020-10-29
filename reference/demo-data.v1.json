@@ -1,0 +1,386 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "demo-data",
+    "version": "1.0"
+  },
+  "servers": [],
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "Login",
+        "tags": [
+          "users"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "$ref": "../models/users.v1.yaml"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "send_to": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "username",
+                    "email"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password"
+                ]
+              }
+            }
+          },
+          "description": "user authentication"
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Get All Users",
+        "tags": [
+          "users"
+        ],
+        "responses": {},
+        "operationId": "get-users"
+      }
+    },
+    "/user/:id": {
+      "get": {
+        "summary": "Get User",
+        "tags": [
+          "users"
+        ],
+        "responses": {},
+        "operationId": "get-user-:id"
+      }
+    },
+    "/user/userId/customer": {
+      "get": {
+        "summary": "Get Customers Of User",
+        "tags": [
+          "customers",
+          "users"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "first_name": {
+                      "type": "string"
+                    },
+                    "last_name": {
+                      "type": "string"
+                    },
+                    "full_name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "phone": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "$ref": "../models/customers.v1.yaml"
+                    }
+                  },
+                  "required": [
+                    "first_name",
+                    "last_name",
+                    "full_name",
+                    "email",
+                    "phone",
+                    "id"
+                  ]
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "operationId": "get-user-userId-customer",
+        "parameters": []
+      },
+      "post": {
+        "summary": "Add Customer For Customer",
+        "tags": [
+          "users",
+          "customers"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "post-user-userId-customer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "first_name": {
+                    "type": "string"
+                  },
+                  "last_name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "phone": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "first_name",
+                  "last_name",
+                  "email",
+                  "phone"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/userId/customer/customerId": {
+      "get": {
+        "summary": "get customer of user",
+        "tags": [
+          "customers",
+          "users"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "$ref": "../models/customers.v1.yaml"
+                    },
+                    "first_name": {
+                      "type": "string"
+                    },
+                    "last_name": {
+                      "type": "string"
+                    },
+                    "full_name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "phone": {
+                      "type": "string"
+                    },
+                    "schedules": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "day",
+                        "time",
+                        "created"
+                      ],
+                      "properties": {
+                        "id": {
+                          "$ref": "../models/schedules.v1.yaml"
+                        },
+                        "day": {
+                          "type": "string",
+                          "format": "date"
+                        },
+                        "time": {
+                          "type": "string",
+                          "format": "time"
+                        },
+                        "created": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "is_complete": {
+                          "type": "boolean"
+                        },
+                        "is_paid": {
+                          "type": "boolean"
+                        },
+                        "comments": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "first_name",
+                    "last_name",
+                    "full_name",
+                    "email",
+                    "phone",
+                    "schedules"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-user-userId-customer-customerId"
+      }
+    },
+    "/user/userId/customer/customerId/schedule": {
+      "get": {
+        "summary": "get customer schedulers of user",
+        "tags": [
+          "schedules",
+          "customers",
+          "users"
+        ],
+        "responses": {},
+        "operationId": "get-user-userId-customer-customerId-schedule"
+      }
+    },
+    "/user/userId/schedule": {
+      "get": {
+        "summary": "get schedule of customer",
+        "tags": [
+          "schedules",
+          "users"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "$ref": "../models/schedules.v1.yaml"
+                    },
+                    "day": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "created": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "time": {
+                      "type": "string",
+                      "format": "time"
+                    },
+                    "comments": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "customer": {
+                      "$ref": "../models/customers.v1.yaml"
+                    },
+                    "is_complete": {
+                      "type": "boolean"
+                    },
+                    "is_paid": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "day",
+                    "created",
+                    "time",
+                    "comments",
+                    "customer",
+                    "is_complete",
+                    "is_paid"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-user-userId-schedule"
+      }
+    },
+    "/user/userId/receipt": {
+      "get": {
+        "summary": "get all receipts of useiId",
+        "tags": [
+          "receipts",
+          "users"
+        ],
+        "responses": {},
+        "operationId": "get-user-userId-receipt"
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "securitySchemes": {}
+  }
+}
