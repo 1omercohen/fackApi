@@ -32,15 +32,25 @@
                   "properties": {
                     "user": {
                       "type": "object",
+                      "required": [
+                        "username",
+                        "email",
+                        "send_to"
+                      ],
                       "properties": {
                         "username": {
-                          "type": "string"
+                          "type": "string",
+                          "minLength": 4,
+                          "maxLength": 10,
+                          "pattern": "[a-z]"
                         },
                         "email": {
-                          "type": "string"
+                          "type": "string",
+                          "format": "email"
                         },
                         "send_to": {
-                          "type": "string"
+                          "type": "string",
+                          "format": "email"
                         }
                       }
                     },
@@ -69,11 +79,17 @@
                 "type": "object",
                 "properties": {
                   "username": {
-                    "type": "string"
+                    "type": "string",
+                    "pattern": "[a-z]",
+                    "minLength": 4,
+                    "maxLength": 10
                   },
                   "password": {
                     "type": "string",
-                    "format": "password"
+                    "format": "password",
+                    "pattern": "[A-Za-z0-9!@#$%^&*]",
+                    "minLength": 6,
+                    "maxLength": 15
                   }
                 },
                 "required": [
@@ -104,7 +120,34 @@
                     "user": {
                       "type": "array",
                       "items": {
-                        "$ref": "../models/users.v1.yaml"
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "exclusiveMinimum": true
+                          },
+                          "username": {
+                            "type": "string",
+                            "pattern": "[a-z]",
+                            "minLength": 4,
+                            "maxLength": 10
+                          },
+                          "email": {
+                            "type": "string",
+                            "format": "email"
+                          },
+                          "send_to": {
+                            "type": "string",
+                            "format": "email"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "username",
+                          "email",
+                          "send_to"
+                        ]
                       }
                     },
                     "status": {
@@ -126,7 +169,7 @@
         "operationId": "get-users"
       }
     },
-    "/user/:id": {
+    "/user/{id}": {
       "get": {
         "summary": "Get User",
         "tags": [
@@ -144,7 +187,34 @@
                       "type": "boolean"
                     },
                     "user": {
-                      "$ref": "../models/users.v1.yaml"
+                      "required": [
+                        "username",
+                        "email",
+                        "send_to",
+                        "id"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "username": {
+                          "type": "string",
+                          "minLength": 4,
+                          "maxLength": 10,
+                          "pattern": "[a-z]"
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email"
+                        },
+                        "send_to": {
+                          "type": "string",
+                          "format": "email"
+                        },
+                        "id": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "exclusiveMinimum": true
+                        }
+                      }
                     },
                     "message": {
                       "type": "string"
@@ -152,6 +222,59 @@
                   },
                   "required": [
                     "status",
+                    "user",
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "username",
+                        "email",
+                        "send_to"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "exclusiveMinimum": true
+                        },
+                        "username": {
+                          "type": "string",
+                          "minLength": 4,
+                          "maxLength": 10,
+                          "pattern": "[a-z]"
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email"
+                        },
+                        "send_to": {
+                          "type": "string",
+                          "format": "email"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message",
                     "user"
                   ]
                 }
@@ -160,9 +283,22 @@
           }
         },
         "operationId": "get-user-:id"
-      }
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer",
+            "exclusiveMinimum": true,
+            "minimum": 1
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": ""
+        }
+      ]
     },
-    "/user/:userId/customer": {
+    "/user/{userId}/customer/": {
       "get": {
         "summary": "Get Customers Of User",
         "tags": [
@@ -177,8 +313,45 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "customer": {
-                      "$ref": "../models/customers.v1.yaml"
+                    "customers": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "exclusiveMinimum": true
+                          },
+                          "first_name": {
+                            "type": "string"
+                          },
+                          "last_name": {
+                            "type": "string"
+                          },
+                          "full_name": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string",
+                            "format": "email"
+                          },
+                          "phone": {
+                            "type": "string",
+                            "pattern": "05(0|1|2|3|4|5|7|8|9)[0-9]{7}",
+                            "minLength": 10,
+                            "maxLength": 10
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "first_name",
+                          "last_name",
+                          "full_name",
+                          "email",
+                          "phone"
+                        ]
+                      }
                     },
                     "status": {
                       "type": "boolean"
@@ -188,7 +361,7 @@
                     }
                   },
                   "required": [
-                    "customer",
+                    "customers",
                     "status"
                   ]
                 },
@@ -262,7 +435,18 @@
           }
         }
       },
-      "parameters": []
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "exclusiveMinimum": true
+          },
+          "name": "userId",
+          "in": "path",
+          "required": true
+        }
+      ]
     },
     "/user/:userId/customer/:customerId": {
       "get": {
