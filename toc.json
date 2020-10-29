@@ -1,0 +1,33 @@
+{
+  "items": [
+    {
+      "type": "item",
+      "title": "demo-data",
+      "uri": "reference/demo-data.v1.json"
+    },
+    {
+      "type": "divider",
+      "title": "Models"
+    },
+    {
+      "type": "item",
+      "title": "customers",
+      "uri": "models/customers.v1.yaml"
+    },
+    {
+      "type": "item",
+      "title": "receipts",
+      "uri": "models/receipts.v1.yaml"
+    },
+    {
+      "type": "item",
+      "title": "schedules",
+      "uri": "models/schedules.v1.yaml"
+    },
+    {
+      "type": "item",
+      "title": "users",
+      "uri": "models/users.v1.yaml"
+    }
+  ]
+}
